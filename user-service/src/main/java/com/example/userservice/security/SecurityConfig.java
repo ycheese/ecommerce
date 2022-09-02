@@ -26,10 +26,12 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/actuator/**")    // actuator 관련 요청에서는 인증 확인을 하지 않음
+                    .permitAll()
                 .antMatchers("/**")
-                .hasIpAddress("0.0.0.0")
-                .and()
-                .apply(new MyCustomDsl());
+                    .hasIpAddress("0.0.0.0")
+                    .and()
+                    .apply(new MyCustomDsl());
 
         http
                 .headers()
